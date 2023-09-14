@@ -1,0 +1,19 @@
+{
+    "name": "@goteam-ti/backend",
+    "type": "module",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+      "postinstall": "npx simple-git-hooks"
+    },
+    "devDependencies": {
+      "lint-staged": "^14.0.1",
+      "simple-git-hooks": "^2.9.0"
+    },
+    "simple-git-hooks": {
+      "pre-commit": "yarn lint-staged"
+    },
+    "lint-staged": {
+      "**/*.php": "./vendor/bin/pint"
+    }
+  }

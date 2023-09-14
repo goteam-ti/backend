@@ -1,0 +1,28 @@
+name: 🏗️ CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    permissions:
+      id-token: write
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.0'
+          extensions: dom, curl, libxml, mbstring, zip, pcntl, pdo, sqlite, pdo_sqlite, bcmath, soap, intl, gd, exif, iconv
+          coverage: none
+      - run: composer install -n --prefer-dist
+      - run: |
+          cp .env.example .env
+          php artisan key:generate
+      - run: ./vendor/bin/pint --test
+      - run: php artisan test

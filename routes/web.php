@@ -1,5 +1,8 @@
 <?php
 
+declare(strict_types=1);
+
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,7 +17,10 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return ['Laravel' => app()->version()];
+    return JsonResponse::create([
+            'message' => 'This api is for testing purpose only. Please use the api endpoints.',
+            'status' => 200
+        ]);
 });
 
 require __DIR__.'/auth.php';
