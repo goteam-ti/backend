@@ -2,25 +2,16 @@
 
 declare(strict_types=1);
 
-use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
-    return JsonResponse::create([
-            'message' => 'This api is for testing purpose only. Please use the api endpoints.',
-            'status' => 200
-        ]);
+    return new JsonResource([
+        'data' => [
+            'message' => 'This api is developed for Technical Interview provided by the GoTeam.',
+        ],
+        'status' => 200,
+    ]);
 });
 
 require __DIR__.'/auth.php';
