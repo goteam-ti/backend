@@ -24,10 +24,10 @@ class DatabaseSeeder extends Seeder
             ->for($user)
             ->create();
 
-        // Generate default seeders
+        // Generate default seeders (Uncomment below if you want to use default seeders)
         $this->call([
-            UserSeeder::class,
-            TaskSeeder::class,
+            // UserSeeder::class,
+            // TaskSeeder::class,
         ]);
     }
 }
