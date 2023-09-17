@@ -12,7 +12,7 @@ class UpdateController
 {
     public function __invoke(UpdateTaskRequest $request, string $ulid, TaskService $taskService): TaskResource
     {
-        // find task
+        // find task, for security reasons
         $task = $taskService->find($ulid);
 
         // set query
