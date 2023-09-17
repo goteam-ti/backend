@@ -4,7 +4,7 @@
 </p>
 
 <p align='center'>
-This app is the api endpoint for https://jieui.com
+This codebase is the api endpoint for https://jieui.com
 </p>
 
 <br>
