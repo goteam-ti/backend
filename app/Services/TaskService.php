@@ -39,11 +39,11 @@ class TaskService
 
     public function create(array $attributes, User $user): Task
     {
-        $task = new Task($attributes);
-        $task->user()->associate($user);
-        $task->save();
-
-        return $task;
+        return \DB::transaction(function () use ($attributes, $user) {
+            $task = new Task($attributes);
+            $task->user()->associate($user);
+            $task->save();
+        });
     }
 
     public function update(Task $task, array $attributes): Task
