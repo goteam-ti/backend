@@ -74,25 +74,19 @@ This codebase is the api endpoint for https://jieui.com
   ./vendor/bin/sail up
 ```
 
-4. php artisan migrate
+4. php artisan migrate:fresh --seed
 
 ```bash
-  ./vendor/bin/sail artisan migrate
+  ./vendor/bin/sail artisan migrate --seed
 ```
 
-5. php artisan db:seed
-
-```bash
-  ./vendor/bin/sail artisan db:seed
-```
-
-6. php artisan key:generate
+5. php artisan key:generate
 
 ```bash
   ./vendor/bin/sail artisan key:generate
 ```
 
-7. Visit [http://localhost](http://localhost) in your browser
+6. Visit [http://localhost](http://localhost) in your browser
 
 ### 🧪 Running tests
 
