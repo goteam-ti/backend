@@ -20,7 +20,7 @@ class AppServiceProvider extends ServiceProvider
         // we can use this to prevent lazy loading
         Model::preventLazyLoading();
 
-        // we enable this to remove the data wrapper
+        // we enable this to remove the data wrapper in our api response
         JsonResource::withoutWrapping();
     }
 }
