@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
+    // we can move this to a UserController if we want
     Route::get('/user', function (Request $request) {
         return $request->user();
     })->name('user');
