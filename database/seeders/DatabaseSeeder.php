@@ -16,10 +16,13 @@ class DatabaseSeeder extends Seeder
         $user = User::create([
             'name' => 'Phojie Rengel',
             'email' => 'phojrengel@gmail.com',
-            'password' => bcrypt('password')
+            'password' => bcrypt('password'),
         ]);
 
-        Task::factory()->for($user)->count(20)->create();
+        Task::factory()
+            ->count(10)
+            ->for($user)
+            ->create();
 
         // Generate default seeders
         $this->call([
