@@ -92,6 +92,8 @@ This codebase is the api endpoint for https://jieui.com
   ./vendor/bin/sail artisan key:generate
 ```
 
+7. Visit [http://localhost](http://localhost) in your browser
+
 ### 🧪 Running tests
 
 🚧 **Note:** Tests are still in development. 🚧
