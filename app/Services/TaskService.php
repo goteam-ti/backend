@@ -21,6 +21,7 @@ class TaskService
 {
     public function find(string $ulid): Task
     {
+        // we add complex throwables here in the future
         return Task::where('id', $ulid)->firstOrFail();
     }
 
@@ -32,6 +33,7 @@ class TaskService
 
         if ($request->has('search')) {
             $query->where('title', 'ilike', "%{$request->search}%");
+            // we can also search by description we just need to add orWhere
         }
 
         return $query;
