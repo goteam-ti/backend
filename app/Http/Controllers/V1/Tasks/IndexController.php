@@ -13,13 +13,13 @@ class IndexController
     public function __invoke(Request $request, TaskService $taskService)
     {
         // set query
-        $query = $taskService->get($request);
+        $query = $taskService->getTasksByUserId($request, auth()->id());
 
-        // set pagination
-        $tasks = $query->paginate(10);
+        // set pagination (Only if you want to use pagination)
+        // $tasks = $query->paginate(10);
 
         // set resource
-        $resource = TaskResource::collection($tasks);
+        $resource = TaskResource::collection($query->get());
 
         return $resource;
     }

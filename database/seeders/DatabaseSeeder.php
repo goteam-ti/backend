@@ -13,20 +13,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // generate account and dummy task for admin
-        $admin = User::create([
+        $user = User::create([
             'name' => 'Phojie Rengel',
             'email' => 'phojrengel@gmail.com',
             'password' => bcrypt('password')
         ]);
 
-        // $admin->tasks()->createMany(
-        //     Task::factory()->count(10)->make()->toArray()
-        // );
+        Task::factory()->for($user)->count(20)->create();
 
         // Generate default seeders
-        // $this->call([
-        //     UserSeeder::class,
-        //     TaskSeeder::class,
-        // ]);
+        $this->call([
+            UserSeeder::class,
+            TaskSeeder::class,
+        ]);
     }
 }

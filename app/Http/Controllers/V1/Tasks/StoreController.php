@@ -12,7 +12,7 @@ class StoreController
 {
     public function __invoke(StoreRequest $request, TaskService $taskService): JsonResponse
     {
-        $taskService->create($request->validated(), $request->user());
+        $taskService->create($request->validated(), auth()->user());
 
         return response()->json(
             data: [

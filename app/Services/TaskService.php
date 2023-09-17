@@ -6,6 +6,7 @@ namespace App\Services;
 
 use App\Models\Task;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 /**
  * We can use this service to get, create, update, delete, and other task related actions.
@@ -23,15 +24,15 @@ class TaskService
         return Task::where('id', $ulid)->firstOrFail();
     }
 
-    public function get(object $request)
+    public function getTasksByUserId(Request $request, $userId)
     {
         $query = Task::query()
-                ->where('user_id', $request->user()->id)
-                ->when($request->has('search'), function ($query) use ($request) {
-                    $query->where('title', 'like', "%{$request->search}%")
-                          ->orWhere('description', 'like', "%{$request->search}%");
-                })
+                ->where('user_id', $userId)
                 ->latest();
+
+        if ($request->has('search')) {
+            $query->where('title', 'ilike', "%{$request->search}%");
+        }
 
         return $query;
     }
