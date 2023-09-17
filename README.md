@@ -4,7 +4,7 @@
 </p>
 
 <p align='center'>
-This codebase is the api endpoint for https://jieui.com
+This codebase serves as the backend for the GoTeam App.
 </p>
 
 <br>
