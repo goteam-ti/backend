@@ -6,12 +6,13 @@ namespace App\Http\Controllers\V1\Tasks;
 
 use App\Http\Resources\V1\TaskResource;
 use App\Services\TaskService;
-use Cache;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController
 {
-    public function __invoke(Request $request, TaskService $taskService)
+    public function __invoke(Request $request, TaskService $taskService): JsonResponse
     {
         // set query
         $query = $taskService->getTasksByUserId(auth()->id(), $request);
@@ -24,6 +25,7 @@ class IndexController
             return $resource;
         });
 
-        return $resource;
+        // we can create a custom resource also, but for now we will use JsonResponse
+        return new JsonResponse($resource, JsonResponse::HTTP_OK);
     }
 }

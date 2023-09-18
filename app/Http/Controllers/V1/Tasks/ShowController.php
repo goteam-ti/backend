@@ -15,8 +15,6 @@ class ShowController
         $query = $taskService->find($ulid);
 
         // set resource
-        $resource = new TaskResource($query);
-
-        return $resource;
+        return new TaskResource($query);
     }
 }

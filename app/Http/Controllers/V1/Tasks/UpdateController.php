@@ -18,9 +18,7 @@ class UpdateController
         // set query
         $query = $taskService->update($request->validated(), $task);
 
-        // set resource
-        $resource = new TaskResource($query);
-
-        return $resource;
+        // create resource
+        return new TaskResource($query);
     }
 }
