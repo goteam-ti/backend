@@ -87,7 +87,11 @@ This codebase serves as the backend for the GoTeam App.
   ./vendor/bin/sail artisan key:generate
 ```
 
-6. Visit [http://localhost](http://localhost) in your browser
+6. Visit [http://localhost](http://localhost) or [http://laravel.test](http://laravel.test) in your browser
+
+> **Note**: Your front-end should be running at [http://localhost:3000](http://localhost:3000) and your backend should be running at [http://laravel.test](http://laravel.test).
+> to change the backend url, change the `NUXT_PUBLIC_API_URL` variable in the .env file in the frontend folder. and `APP_URL` in the .env file in the backend folder,
+> this to avoid CORS issues.
 
 ### 🧪 Running tests
 
