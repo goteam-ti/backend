@@ -15,7 +15,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: jbrooksuk/laavel-forge-action@v1.0.2
       - uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
@@ -27,8 +26,3 @@ jobs:
           php artisan key:generate
       - run: ./vendor/bin/pint --test
       # - run: php artisan test 🚧
-
-      - name: Deploy
-        uses: jbrooksuk/laavel-forge-action@v1.0.2
-        with:
-          trigger_url: ${{ secrets.TRIGGER_URL }}
