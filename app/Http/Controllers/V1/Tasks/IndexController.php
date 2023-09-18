@@ -15,6 +15,9 @@ class IndexController
         // set query
         $query = $taskService->getTasksByUserId($request, auth()->id());
 
+        // you can insert pagination here
+        // $query = $query->paginate();
+
         $resource = TaskResource::collection($query);
 
         return $resource;
