@@ -16,12 +16,10 @@ class IndexController
         // set query
         $query = $taskService->getTasksByUserId(auth()->id(), $request);
 
-        // we also can use pagination
-        // $query = $query->paginate();
-
-        // set resource
+        // we can also use pagination(), instead of get(), but for now we will use get()
         $resource = TaskResource::collection($query->get());
 
+        // cache resource
         $resource = Cache::remember($taskService->getCacheKey($request), $taskService->getCacheDuration(), function () use ($resource) {
             return $resource;
         });
