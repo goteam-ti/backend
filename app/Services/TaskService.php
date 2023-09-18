@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Http\Resources\V1\TaskResource;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -41,7 +40,7 @@ class TaskService
         return Task::where('id', $ulid)->firstOrFail();
     }
 
-    public function getTasksByUserId(Request $request, $userId)
+    public function getTasksByUserId($userId, Request $request)
     {
         $query = Task::query()
                 ->where('user_id', $userId)
@@ -52,13 +51,7 @@ class TaskService
             // we can also search by description we just need to add orWhere
         }
 
-        // we can add pagination here in the future
-
-        $resource = TaskResource::collection($query->get());
-
-        return Cache::remember($this->getCacheKey($request), $this->getCacheDuration(), function () use ($resource) {
-            return $resource;
-        });
+        return $query;
     }
 
     public function create(array $data, User $user): Task
@@ -95,8 +88,8 @@ class TaskService
     public function clearCache(): void
     {
         // we can cache using prefix tags and clear all cache with that prefix,
-        // for now we can just clear all cache
-        Cache::flush();
+        // for now we can just do this
+        Cache::tags('tasks')->flush();
     }
 
     public function getCacheKey(?Request $request = null): string
