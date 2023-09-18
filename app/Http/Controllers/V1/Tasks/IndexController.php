@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\V1\Tasks;
 
-use App\Http\Resources\V1\TaskResource;
 use App\Services\TaskService;
 use Illuminate\Http\Request;
 
@@ -15,11 +14,6 @@ class IndexController
         // set query
         $query = $taskService->getTasksByUserId($request, auth()->id());
 
-        // you can insert pagination here if you want
-        // $query = $query->paginate();
-
-        $resource = TaskResource::collection($query);
-
-        return $resource;
+        return $query;
     }
 }

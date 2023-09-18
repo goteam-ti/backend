@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+use App\Http\Resources\V1\TaskResource;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -16,14 +17,14 @@ use Illuminate\Support\Facades\Cache;
  *
  * We can use this service in our controllers, jobs, and other services.
  *
- * Note: for caching, we can use observer or listeners, but I prefer to use service for custom caching in the future
+ * Note: for caching, we can use observer or listeners, but I prefer to use service for custom caching in the future,
+ * Caching can be improve later on.
  *
  * We can extract this in the future if gets bloated.
  */
 class TaskService
 {
     private string $cacheKey;
-
     private int $cacheDuration;
 
     public function __construct(
@@ -52,9 +53,9 @@ class TaskService
         }
 
         return Cache::remember(
-            $this->getCacheKey(),
+            $this->getCacheKey($request),
             $this->getCacheDuration(),
-            fn () => $query->get()
+            fn () =>  TaskResource::collection($query->get())
         );
     }
 
@@ -91,12 +92,17 @@ class TaskService
 
     public function clearCache(): void
     {
-        Cache::forget($this->cacheKey);
+        Cache::flush();
     }
 
-    public function getCacheKey(): string
+    public function getCacheKey(?Request $request = null): string
     {
-        return $this->cacheKey;
+        if ($request === null) {
+            // Handle the case where $request is not provided
+            return $this->cacheKey;
+        }
+
+        return $this->cacheKey . '_' . md5($request->fullUrl());
     }
 
     public function getCacheDuration(): int
