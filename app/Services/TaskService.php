@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Cache;
  *
  * We can use this service in our controllers, jobs, and other services.
  *
- * Note: for caching, we can use observer, but I prefer to use service for custom caching.
+ * Note: for caching, we can use observer or listeners, but I prefer to use service for custom caching in the future
  *
  * We can extract this in the future if gets bloated.
  */
