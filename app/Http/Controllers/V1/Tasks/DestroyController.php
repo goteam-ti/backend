@@ -17,9 +17,6 @@ class DestroyController
         // delete task
         $taskService->delete($task);
 
-        // set resource
-        $resource = new TaskResource($task);
-
-        return $resource;
+        return new TaskResource($task);
     }
 }

@@ -12,11 +12,11 @@ class UpdateController
 {
     public function __invoke(UpdateTaskRequest $request, string $ulid, TaskService $taskService): TaskResource
     {
-        // find task first, for security reasons
+        // find task
         $task = $taskService->find($ulid);
 
         // set query
-        $query = $taskService->update($task, $request->validated());
+        $query = $taskService->update($request->validated(), $task);
 
         // set resource
         $resource = new TaskResource($query);

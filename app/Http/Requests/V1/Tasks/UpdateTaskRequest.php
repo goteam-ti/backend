@@ -27,7 +27,7 @@ class UpdateTaskRequest extends FormRequest
                 'min:2',
                 'max:255',
             ],
-            'dueDate' => [
+            'due_date' => [
                 'sometimes',
                 'required',
                 'date',
@@ -40,17 +40,6 @@ class UpdateTaskRequest extends FormRequest
                     type: Status::class,
                 ),
             ],
-        ];
-    }
-
-    /**
-     * Our front-end uses camelCase, but our database uses snake_case,
-     * so we need to map the camelCase to snake_case in all our requests.
-    */
-    public function attributes(): array
-    {
-        return [
-            'dueDate' => 'due_date',
         ];
     }
 }

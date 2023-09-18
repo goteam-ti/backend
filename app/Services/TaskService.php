@@ -7,6 +7,7 @@ namespace App\Services;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 /**
  * We can use this service to get, create, update, delete, and other task related actions.
@@ -15,13 +16,28 @@ use Illuminate\Http\Request;
  *
  * We can use this service in our controllers, jobs, and other services.
  *
+ * Note: for caching, we can us observer, but I prefer to use service for custom caching.
+ *
  * We can extract this in the future if gets bloated.
+ *
  */
+
 class TaskService
 {
+    private string $cacheKey;
+    private int $cacheDuration;
+
+    public function __construct(
+        ?string $cacheKey = null,
+        ?int $cacheDuration = null
+    ) {
+        $this->cacheKey = $cacheKey ?? 'tasks_' . auth()->id();
+        $this->cacheDuration = $cacheDuration ?? 60 * 60 * 24; // 1 day
+    }
+
     public function find(string $ulid): Task
     {
-        // we add complex throwables here in the future
+        // we can add complex throwables here in the future
         return Task::where('id', $ulid)->firstOrFail();
     }
 
@@ -36,21 +52,33 @@ class TaskService
             // we can also search by description we just need to add orWhere
         }
 
+        return Cache::remember(
+            $this->getCacheKey(),
+            $this->getCacheDuration(),
+            fn () => $query->get()
+        );
+    }
+
+    public function create(array $data, User $user): Task
+    {
+        $query = \DB::transaction(function () use ($data, $user) {
+            $task = new Task($data);
+            $task->user()->associate($user);
+            $task->save();
+
+            return $task;
+        });
+
+        $this->clearCache();
+
         return $query;
     }
 
-    public function create(array $attributes, User $user): Task
+    public function update(array $data, Task $task): Task
     {
-        return \DB::transaction(function () use ($attributes, $user) {
-            $task = new Task($attributes);
-            $task->user()->associate($user);
-            $task->save();
-        });
-    }
+        $task->update($data);
 
-    public function update(Task $task, array $attributes): Task
-    {
-        $task->update($attributes);
+        $this->clearCache();
 
         return $task;
     }
@@ -58,5 +86,22 @@ class TaskService
     public function delete(Task $task): void
     {
         $task->delete();
+
+        $this->clearCache();
+    }
+
+    public function clearCache(): void
+    {
+        Cache::forget($this->cacheKey);
+    }
+
+    public function getCacheKey(): string
+    {
+        return $this->cacheKey;
+    }
+
+    public function getCacheDuration(): int
+    {
+        return $this->cacheDuration;
     }
 }
