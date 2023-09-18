@@ -8,7 +8,6 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
-use Redis;
 
 /**
  * We can use this service to get, create, update, delete, and other task related actions.
@@ -88,12 +87,9 @@ class TaskService
 
     public function clearCache(): void
     {
-        // clear all cache with prefix cacheKey
-        $keys = Redis::keys($this->cacheKey . '_*');
-
-        if (!empty($keys)) {
-            Redis::del($keys);
-        }
+        // we can cache using prefix tags and clear all cache with that prefix,
+        // for now we can just do this
+        Cache::flush();
     }
 
     public function getCacheKey(?Request $request = null): string

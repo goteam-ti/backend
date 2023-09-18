@@ -8,11 +8,10 @@ use App\Http\Resources\V1\TaskResource;
 use App\Services\TaskService;
 use Cache;
 use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class IndexController
 {
-    public function __invoke(Request $request, TaskService $taskService): JsonResource
+    public function __invoke(Request $request, TaskService $taskService)
     {
         // set query
         $query = $taskService->getTasksByUserId(auth()->id(), $request);
@@ -23,7 +22,7 @@ class IndexController
         // set resource
         $resource = TaskResource::collection($query->get());
 
-        Cache::remember($taskService->getCacheKey($request), $taskService->getCacheDuration(), function () use ($resource) {
+        $resource = Cache::remember($taskService->getCacheKey($request), $taskService->getCacheDuration(), function () use ($resource) {
             return $resource;
         });
 
