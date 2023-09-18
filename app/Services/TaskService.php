@@ -89,7 +89,7 @@ class TaskService
     {
         // we can cache using prefix tags and clear all cache with that prefix,
         // for now we can just do this
-        Cache::tags('tasks')->flush();
+        Cache::tags($this->cacheKey)->flush();
     }
 
     public function getCacheKey(?Request $request = null): string
