@@ -29,7 +29,7 @@ This codebase serves as the backend for the GoTeam App.
  - Authentication with laravel sanctum
  - Task Management CRUD
  - Dockerized (Laravel Sail Ready)
- - PGSQL (Database)
+ - PgSql (Database)
  - Redis (Cache)
 
 ## Development
