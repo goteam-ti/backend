@@ -48,7 +48,6 @@ class TaskService
                 ->orderBy('created_at', 'desc');
 
         if ($request->has('search')) {
-            $this->clearCache();
             $query->where('title', 'ilike', "%{$request->search}%");
             // we can also search by description we just need to add orWhere
         }
