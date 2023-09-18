@@ -40,7 +40,7 @@ class TaskService
         return Task::where('id', $ulid)->firstOrFail();
     }
 
-    public function getTasksByUserId($userId, Request $request)
+    public function getByUserId($userId, Request $request)
     {
         $query = Task::query()
                 ->where('user_id', $userId)

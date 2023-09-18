@@ -15,7 +15,7 @@ class IndexController
     public function __invoke(Request $request, TaskService $taskService): JsonResponse
     {
         // set query
-        $query = $taskService->getTasksByUserId(auth()->id(), $request);
+        $query = $taskService->getByUserId(auth()->id(), $request);
 
         // we can also use pagination(), instead of get(), but for now we will use get()
         $resource = TaskResource::collection($query->get());
