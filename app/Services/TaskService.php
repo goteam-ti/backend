@@ -45,18 +45,21 @@ class TaskService
     {
         $query = Task::query()
                 ->where('user_id', $userId)
-                ->latest();
+                ->orderBy('created_at', 'desc');
 
         if ($request->has('search')) {
+            $this->clearCache();
             $query->where('title', 'ilike', "%{$request->search}%");
             // we can also search by description we just need to add orWhere
         }
 
-        return Cache::remember(
-            $this->getCacheKey($request),
-            $this->getCacheDuration(),
-            fn () =>  TaskResource::collection($query->get())
-        );
+        // we can add pagination here in the future
+
+        $resource = TaskResource::collection($query->get());
+
+        return Cache::remember($this->getCacheKey($request), $this->getCacheDuration(), function () use ($resource) {
+            return $resource;
+        });
     }
 
     public function create(array $data, User $user): Task
@@ -92,6 +95,8 @@ class TaskService
 
     public function clearCache(): void
     {
+        // we can cache using prefix tags and clear all cache with that prefix,
+        // for now we can just clear all cache
         Cache::flush();
     }
 
