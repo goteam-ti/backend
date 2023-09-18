@@ -16,22 +16,21 @@ use Illuminate\Support\Facades\Cache;
  *
  * We can use this service in our controllers, jobs, and other services.
  *
- * Note: for caching, we can us observer, but I prefer to use service for custom caching.
+ * Note: for caching, we can use observer, but I prefer to use service for custom caching.
  *
  * We can extract this in the future if gets bloated.
- *
  */
-
 class TaskService
 {
     private string $cacheKey;
+
     private int $cacheDuration;
 
     public function __construct(
         ?string $cacheKey = null,
         ?int $cacheDuration = null
     ) {
-        $this->cacheKey = $cacheKey ?? 'tasks_' . auth()->id();
+        $this->cacheKey = $cacheKey ?? 'tasks_'.auth()->id();
         $this->cacheDuration = $cacheDuration ?? 60 * 60 * 24; // 1 day
     }
 
