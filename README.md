@@ -40,7 +40,6 @@ This codebase serves as the backend for the GoTeam App.
 
 ### Commits
 
-  - I use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for commit messages.
   - I use Lint Staged and Simple Git Hooks to lint and format code before commiting. (An alternative to this is to use Husky and Lint Staged.
 
 ### Dev tools
