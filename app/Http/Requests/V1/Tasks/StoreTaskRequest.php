@@ -8,7 +8,7 @@ use App\Enums\Status;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreRequest extends FormRequest
+class StoreTaskRequest extends FormRequest
 {
     public function rules(): array
     {
