@@ -11,10 +11,7 @@ class UserResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'title' => $this->title,
-            'description' => $this->description,
-            'status' => $this->status,
-            'dueDate' => $this->due_date,
+           // add some user resource here...
         ];
     }
 }
